@@ -25,5 +25,7 @@ yarn-error.log*
 .idea/
 .vscode/
 *.swp
-*.swo".terraform/" 
-".terraform/" 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
