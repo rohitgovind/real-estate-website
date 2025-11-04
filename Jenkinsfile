@@ -2,23 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/rohitgovind/real-estate-website.git'
             }
         }
 
-        stage('Build Frontend') {
+        stage('Build in Docker') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    args '-u root:root'
+                }
+            }
             steps {
                 dir('client') {
                     sh 'npm install'
                     sh 'npm run build'
                 }
-            }
-        }
-
-        stage('Build Backend') {
-            steps {
                 dir('server') {
                     sh 'npm install'
                 }
@@ -27,7 +28,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deployment step placeholder — coming next'
+                echo '✅ Build completed successfully — deployment stage placeholder'
             }
         }
     }
